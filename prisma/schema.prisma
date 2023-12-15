@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String    @id @default(uuid())
+  email            String    @unique @db.VarChar(255)
+  phone            String?   @unique @db.VarChar(255)
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  sentMessages     Message[] @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
+
+  @@index([email])
+  @@index([phone])
+  @@map("users")
+}
+
+model Message {
+  id          String    @id @default(uuid())
+  content     String
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  recipientId String
+  recipient   User      @relation(fields: [recipientId], references: [id], name: "ReceivedMessages")
+  senderId    String
+  sender      User      @relation(fields: [senderId], references: [id], name: "SentMessages")
+  readAt      DateTime? @map("read_at") @db.Timestamptz(6)
+
+  @@index([recipientId, senderId])
+  @@map("messages")
+}

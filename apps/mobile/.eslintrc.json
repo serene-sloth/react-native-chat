@@ -1,0 +1,4 @@
+{
+  "extends": ["plugin:@nx/react", "../../.eslintrc.json"],
+  "ignorePatterns": ["!**/*", ".expo", "web-build", "cache", "dist"]
+}

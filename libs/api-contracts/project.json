@@ -1,0 +1,16 @@
+{
+  "name": "api-contracts",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api-contracts/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/api-contracts/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}
